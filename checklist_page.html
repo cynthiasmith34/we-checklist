@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>White Electric — Safety Checklist</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;background:#0a0d1a;color:#e8e8f0;padding:16px;min-height:100vh}
+.header{background:#B01E28;border-radius:12px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.header h1{font-size:20px;font-weight:900;color:#fff;letter-spacing:2px}
+.header p{font-size:12px;color:rgba(255,255,255,0.7);margin-top:2px}
+.card{background:#0d1021;border:1px solid #1e2845;border-radius:12px;padding:16px;margin-bottom:12px}
+.section-title{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#B01E28;margin-bottom:12px;font-weight:700}
+.form-group{margin-bottom:12px}
+.form-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#5a5a7a;margin-bottom:6px;display:block}
+.form-input{width:100%;background:#131628;border:1px solid #1e2845;border-radius:8px;padding:10px 12px;color:#e8e8f0;font-size:16px;outline:none;-webkit-appearance:none}
+.form-input:focus{border-color:#B01E28}
+.check-item{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #1e2845}
+.check-item:last-child{border-bottom:none}
+.check-label{font-size:13px;flex:1;padding-right:12px;line-height:1.4}
+.check-buttons{display:flex;gap:8px;flex-shrink:0}
+.check-btn{padding:8px 18px;border-radius:8px;border:1px solid #1e2845;background:#131628;color:#5a5a7a;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.15s;-webkit-tap-highlight-color:transparent}
+.check-btn.pass.active{background:#2ecc71;border-color:#2ecc71;color:#fff}
+.check-btn.fail.active{background:#e74c3c;border-color:#e74c3c;color:#fff}
+.submit-btn{width:100%;background:#B01E28;color:#fff;border:none;border-radius:12px;padding:18px;font-size:16px;font-weight:700;cursor:pointer;margin-top:16px;letter-spacing:1px;-webkit-tap-highlight-color:transparent}
+.submit-btn:active{background:#8f1820}
+.success{text-align:center;padding:60px 20px}
+.success-icon{font-size:64px;margin-bottom:16px}
+.success h2{font-size:28px;color:#2ecc71;margin-bottom:8px;font-weight:700}
+.success p{color:#5a5a7a;font-size:14px;line-height:1.6}
+.loading{text-align:center;padding:20px;color:#5a5a7a;font-size:14px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>WHITE ELECTRIC</h1>
+    <p>Vehicle Safety Checklist</p>
+  </div>
+</div>
+
+<div id="form">
+  <div class="card">
+    <div class="section-title">Vehicle Info</div>
+    <div class="form-group">
+      <label class="form-label">Asset ID / Unit #</label>
+      <input class="form-input" id="asset_id" placeholder="e.g. 0389" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Driver Name</label>
+      <input class="form-input" id="driver" placeholder="Your full name">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Date</label>
+      <input class="form-input" id="date" type="date">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Current Mileage</label>
+      <input class="form-input" id="mileage" type="number" placeholder="Odometer reading">
+    </div>
+  </div>
+
+  <div id="checklist_container"></div>
+
+  <button class="submit-btn" onclick="submitChecklist()">SUBMIT CHECKLIST</button>
+</div>
+
+<div id="success" style="display:none" class="success">
+  <div class="success-icon">✅</div>
+  <h2>Submitted!</h2>
+  <p>Your safety checklist has been received.<br>Thank you, <span id="success_name"></span>!</p>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://odeytpjnkfwksguflhxy.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9kZXl0cGpua2Z3a3NndWZsaHh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwNzkzMzYsImV4cCI6MjA5MTY1NTMzNn0.U1OE3zqxKnkoU-0BRHTBFiy1yPrbhcgT0Ra9xryTCdQ';
+
+const sections = {
+  'Pre-Trip Exterior': [
+    'Lights (headlights, taillights, turn signals)',
+    'Windshield (cracks, chips)',
+    'Mirrors (clean, adjusted)',
+    'Tires (pressure, wear, damage)',
+    'Fuel level adequate',
+    'No visible leaks under vehicle',
+    'Body damage / new damage',
+    'License plate visible'
+  ],
+  'Pre-Trip Interior': [
+    'Seatbelts functional',
+    'Horn operational',
+    'Wipers functional',
+    'Gauges (fuel, temp, oil pressure)',
+    'Brakes functional',
+    'Emergency brake',
+    'First aid kit present',
+    'Fire extinguisher present'
+  ],
+  'Engine / Fluids': [
+    'Oil level OK',
+    'Coolant level OK',
+    'Brake fluid OK',
+    'Windshield washer fluid',
+    'Battery terminals clean'
+  ],
+  'Safety Equipment': [
+    'Safety cones / triangles',
+    'Reflective vest',
+    'Hard hat in vehicle',
+    'Gloves in vehicle'
+  ],
+  'Post-Trip': [
+    'Fuel as needed',
+    'Note any damage',
+    'Vehicle parked properly',
+    'Keys returned / secured'
+  ]
+};
+
+// Pre-fill from URL params
+const params = new URLSearchParams(window.location.search);
+if (params.get('asset')) document.getElementById('asset_id').value = params.get('asset');
+if (params.get('driver')) document.getElementById('driver').value = params.get('driver');
+document.getElementById('date').value = new Date().toISOString().split('T')[0];
+
+// Build checklist
+let itemIndex = 0;
+const allItems = [];
+const container = document.getElementById('checklist_container');
+
+Object.entries(sections).forEach(([section, items]) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = '<div class="section-title">' + section + '</div>';
+
+  items.forEach(item => {
+    const i = itemIndex++;
+    allItems.push({ label: item, status: 'pass' });
+
+    const row = document.createElement('div');
+    row.className = 'check-item';
+    row.innerHTML = `
+      <div class="check-label">${item}</div>
+      <div class="check-buttons">
+        <button class="check-btn pass active" data-idx="${i}" data-status="pass">PASS</button>
+        <button class="check-btn fail" data-idx="${i}" data-status="fail">FAIL</button>
+      </div>`;
+    card.appendChild(row);
+  });
+
+  container.appendChild(card);
+});
+
+// Handle button clicks
+container.addEventListener('click', function(e) {
+  const btn = e.target.closest('.check-btn');
+  if (!btn) return;
+  const i = parseInt(btn.dataset.idx);
+  const s = btn.dataset.status;
+  allItems[i].status = s;
+  btn.closest('.check-item').querySelectorAll('.check-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+});
+
+async function submitChecklist() {
+  const asset_id = document.getElementById('asset_id').value.trim();
+  const driver = document.getElementById('driver').value.trim();
+  const date = document.getElementById('date').value;
+  const mileage = document.getElementById('mileage').value;
+
+  if (!asset_id || !driver || !date) {
+    alert('Please fill in Asset ID, Driver Name, and Date before submitting.');
+    return;
+  }
+
+  const btn = document.querySelector('.submit-btn');
+  btn.textContent = 'Submitting...';
+  btn.disabled = true;
+
+  const fails = allItems.filter(i => i.status === 'fail').map(i => i.label);
+  const description = `Safety checklist by ${driver}. ${fails.length ? 'FAILS: ' + fails.join(', ') : 'All items passed.'}`;
+
+  try {
+    // Save to service_logs
+    const logRes = await fetch(`${SUPABASE_URL}/rest/v1/service_logs`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        asset_id,
+        type: 'Inspection',
+        date,
+        mileage: mileage || null,
+        description,
+        driver
+      })
+    });
+
+    // Update mileage if provided
+    if (mileage) {
+      await fetch(`${SUPABASE_URL}/rest/v1/assets?asset_id=eq.${encodeURIComponent(asset_id)}`, {
+        method: 'PATCH',
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify({ mileage, last_mileage_date: date })
+      });
+    }
+
+    if (logRes.ok || logRes.status === 201) {
+      document.getElementById('form').style.display = 'none';
+      document.getElementById('success_name').textContent = driver;
+      document.getElementById('success').style.display = 'block';
+    } else {
+      throw new Error('Submit failed: ' + logRes.status);
+    }
+  } catch(e) {
+    alert('Error submitting. Please try again.\n' + e.message);
+    btn.textContent = 'SUBMIT CHECKLIST';
+    btn.disabled = false;
+  }
+}
+</script>
+</body>
+</html>
