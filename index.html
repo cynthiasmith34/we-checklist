@@ -947,7 +947,7 @@
   <div class="comments-section" style="border-top: 2px solid var(--we-black);">
     <h4>📷 Vehicle Photos — Required Monthly</h4>
     <p style="font-size:11.5px;color:#777;margin-bottom:10px;font-style:italic;">Take one photo from each angle before beginning your route. Photos document vehicle condition at time of inspection.</p>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
 
       <div style="text-align:center;">
         <label for="photoFront" style="display:block;cursor:pointer;">
@@ -1033,6 +1033,45 @@
           </div>
         </label>
         <input type="file" id="photoRear" accept="image/*" capture="environment" style="display:none;" onchange="previewPhoto(this,'photoRearThumb')"/>
+      
+
+      <div style="text-align:center;">
+        <label for="photoBed" style="display:block;cursor:pointer;">
+          <div style="border:2px dashed var(--border);border-radius:6px;padding:10px 6px;background:#F4F3EE;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--we-yellow)'" onmouseout="this.style.borderColor='var(--border)'">
+            <svg width="56" height="48" viewBox="0 0 80 60" style="display:block;margin:0 auto 6px;">
+              <rect x="5" y="10" width="70" height="42" rx="4" fill="#D0CFC8" stroke="#666" stroke-width="1.5"/>
+              <rect x="5" y="10" width="70" height="16" rx="4" fill="#C0BFB8" stroke="#777" stroke-width="1"/>
+              <rect x="8" y="30" width="64" height="20" rx="2" fill="#B8B7B0" stroke="#888" stroke-width="1"/>
+              <line x1="40" y1="30" x2="40" y2="50" stroke="#999" stroke-width="1"/>
+              <rect x="5" y="48" width="70" height="6" rx="2" fill="#AAA" stroke="#888" stroke-width="1"/>
+              <ellipse cx="13" cy="57" rx="9" ry="5" fill="#555"/>
+              <ellipse cx="67" cy="57" rx="9" ry="5" fill="#555"/>
+            </svg>
+            <div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#555;margin-bottom:4px;">Bed / Cargo</div>
+            <div id="photoBedThumb" style="display:none;margin-bottom:4px;"><img style="max-width:100%;max-height:60px;border-radius:4px;object-fit:cover;" /></div>
+            <div style="font-size:10px;color:#aaa;">Tap to attach photo</div>
+          </div>
+        </label>
+        <input type="file" id="photoBed" accept="image/*" capture="environment" style="display:none;" onchange="previewPhoto(this,'photoBedThumb')"/>
+      </div>
+
+      <div style="text-align:center;">
+        <label for="photoInterior" style="display:block;cursor:pointer;">
+          <div style="border:2px dashed var(--border);border-radius:6px;padding:10px 6px;background:#F4F3EE;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--we-yellow)'" onmouseout="this.style.borderColor='var(--border)'">
+            <svg width="56" height="48" viewBox="0 0 80 60" style="display:block;margin:0 auto 6px;">
+              <rect x="5" y="14" width="70" height="36" rx="6" fill="#D0CFC8" stroke="#666" stroke-width="1.5"/>
+              <rect x="10" y="16" width="60" height="18" rx="3" fill="#C8D8E8" stroke="#888" stroke-width="1"/>
+              <rect x="25" y="36" width="30" height="10" rx="2" fill="#C0BFB8" stroke="#999" stroke-width="1"/>
+              <circle cx="40" cy="41" r="4" fill="#AAA" stroke="#888" stroke-width="1"/>
+              <rect x="8" y="36" width="14" height="8" rx="2" fill="#B8B7B0" stroke="#999" stroke-width="1"/>
+              <rect x="58" y="36" width="14" height="8" rx="2" fill="#B8B7B0" stroke="#999" stroke-width="1"/>
+            </svg>
+            <div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#555;margin-bottom:4px;">Interior / Cab</div>
+            <div id="photoInteriorThumb" style="display:none;margin-bottom:4px;"><img style="max-width:100%;max-height:60px;border-radius:4px;object-fit:cover;" /></div>
+            <div style="font-size:10px;color:#aaa;">Tap to attach photo</div>
+          </div>
+        </label>
+        <input type="file" id="photoInterior" accept="image/*" capture="environment" style="display:none;" onchange="previewPhoto(this,'photoInteriorThumb')"/>
       </div>
 
     </div>
