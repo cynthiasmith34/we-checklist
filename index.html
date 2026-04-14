@@ -1109,84 +1109,259 @@
 </script>
 
 <style>
+/* Confirmation Modal */
+.confirm-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;align-items:center;justify-content:center;}
+.confirm-overlay.open{display:flex;}
+.confirm-modal{background:#F8F7F2;border:2px solid #1A1A1A;border-radius:8px;max-width:560px;width:95%;max-height:85vh;overflow-y:auto;}
+.confirm-header{background:#1A1A1A;color:#F5C800;font-family:'Oswald',sans-serif;font-size:16px;letter-spacing:0.1em;text-transform:uppercase;padding:14px 20px;}
+.confirm-body{padding:16px 20px;}
+.confirm-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #E0DFD8;font-size:12.5px;}
+.confirm-row:last-child{border-bottom:none;}
+.confirm-label{color:#888;font-size:11px;text-transform:uppercase;letter-spacing:0.08em;}
+.confirm-val{font-weight:600;color:#1A1A1A;}
+.confirm-section{margin-top:12px;margin-bottom:6px;font-family:'Oswald',sans-serif;font-size:12px;text-transform:uppercase;letter-spacing:0.1em;color:#555;border-bottom:1px solid #ccc;padding-bottom:4px;}
+.confirm-fail{color:#C62828;font-weight:700;}
+.confirm-warn{color:#F57F17;font-weight:600;}
+.confirm-footer{display:flex;gap:10px;justify-content:flex-end;padding:14px 20px;border-top:2px solid #1A1A1A;background:#F0EFE8;}
+.btn-cancel{background:#fff;border:1.5px solid #ccc;border-radius:6px;padding:9px 20px;font-family:'Oswald',sans-serif;font-size:13px;cursor:pointer;letter-spacing:0.08em;text-transform:uppercase;}
+.btn-confirm{background:#F5C800;border:none;border-radius:6px;padding:9px 24px;font-family:'Oswald',sans-serif;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:0.08em;text-transform:uppercase;}
+.btn-confirm:hover{background:#e6b800;}
+
+/* Submit section */
 .submit-section{background:#1A1A1A;padding:20px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 .submit-btn-db{background:#F5C800;color:#1A1A1A;font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border:none;border-radius:6px;padding:12px 32px;cursor:pointer;}
 .submit-btn-db:hover{background:#e6b800;}
 #dbStatus{font-size:12px;color:#888;font-family:'Oswald',sans-serif;}
-#dbStatus.ok{color:#2E7D32;}
+#dbStatus.ok{color:#2E7D32;font-size:14px;font-weight:700;}
 #dbStatus.err{color:#C62828;}
+
+/* Damage marks */
+.dmg-mark{cursor:crosshair;}
+.dmg-x{fill:none;stroke:#C62828;stroke-width:2.5;stroke-linecap:round;}
+
+/* Success screen */
+.success-overlay{display:none;position:fixed;inset:0;background:#F8F7F2;z-index:2000;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;}
+.success-overlay.open{display:flex;}
 </style>
+
+<!-- Confirmation Modal -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-modal">
+    <div class="confirm-header">⚡ Review & Confirm Submission</div>
+    <div class="confirm-body" id="confirmBody"></div>
+    <div class="confirm-footer">
+      <button class="btn-cancel" onclick="document.getElementById('confirmOverlay').classList.remove('open')">← Edit</button>
+      <button class="btn-confirm" onclick="finalSubmit()">✓ Confirm & Submit</button>
+    </div>
+  </div>
+</div>
+
+<!-- Success Screen -->
+<div class="success-overlay" id="successOverlay">
+  <svg width="80" height="80" viewBox="0 0 80 80" style="margin-bottom:16px;">
+    <circle cx="40" cy="40" r="38" fill="#2E7D32" opacity="0.15"/>
+    <circle cx="40" cy="40" r="30" fill="#2E7D32"/>
+    <polyline points="25,40 35,52 56,28" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+  <div style="font-family:'Oswald',sans-serif;font-size:28px;color:#2E7D32;margin-bottom:8px;letter-spacing:0.05em;">SUBMITTED</div>
+  <div style="font-size:14px;color:#555;margin-bottom:6px;" id="successMsg">Checklist saved to White Electric fleet system.</div>
+  <div style="font-size:12px;color:#888;margin-bottom:24px;">A copy has been emailed to you for your records.</div>
+  <button onclick="window.print()" style="background:#1A1A1A;color:#F5C800;font-family:'Oswald',sans-serif;font-size:14px;letter-spacing:0.1em;text-transform:uppercase;border:none;border-radius:6px;padding:11px 28px;cursor:pointer;margin-right:10px;">🖨 Print My Copy</button>
+  <button onclick="location.reload()" style="background:#fff;border:1.5px solid #ccc;font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;border-radius:6px;padding:11px 20px;cursor:pointer;">New Checklist</button>
+</div>
+
 <div class="submit-section">
   <div>
     <div style="color:#F5C800;font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">⚡ Submit to Fleet Database</div>
-    <div style="color:#666;font-size:11px;">Saves checklist results directly to the White Electric fleet system.</div>
+    <div style="color:#666;font-size:11px;">You will review before final submission. A PDF copy will be emailed to you.</div>
   </div>
   <div style="display:flex;align-items:center;gap:12px;">
     <div id="dbStatus"></div>
-    <button class="submit-btn-db" onclick="submitToDatabase()">Submit Checklist</button>
+    <button class="submit-btn-db" onclick="reviewSubmit()">Review & Submit</button>
   </div>
 </div>
+
 <script>
 const SB_URL='https://odeytpjnkfwksguflhxy.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9kZXl0cGpua2Z3a3NndWZsaHh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwNzkzMzYsImV4cCI6MjA5MTY1NTMzNn0.U1OE3zqxKnkoU-0BRHTBFiy1yPrbhcgT0Ra9xryTCdQ';
+const BREVO_KEY='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';
 
+// Pre-fill from URL params
 window.addEventListener('DOMContentLoaded',()=>{
   const p=new URLSearchParams(window.location.search);
   if(p.get('driver')){const el=document.querySelector('input[placeholder="Full Name"]');if(el)el.value=p.get('driver');}
   if(p.get('asset')){const el=document.querySelector('input[placeholder*="WE-Truck"]');if(el)el.value=p.get('asset');}
   if(p.get('vehicle')){const el=document.querySelector('input[placeholder*="2022 Ford"]');if(el)el.value=p.get('vehicle');}
   document.querySelectorAll('input[type="date"]').forEach(i=>{if(!i.value)i.value=new Date().toISOString().split('T')[0];});
+  
+  // Fix tire flags - re-attach events
+  document.querySelectorAll('.tire-flag').forEach(flag => {
+    flag.addEventListener('click', function() {
+      const row = this.closest('.tire-status-row');
+      row.querySelectorAll('.tire-flag').forEach(f => f.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Fix damage diagrams - make SVGs clickable to mark X
+  document.querySelectorAll('.damage-view svg').forEach(svg => {
+    svg.style.cursor = 'crosshair';
+    svg.addEventListener('click', function(e) {
+      const rect = this.getBoundingClientRect();
+      const vb = this.viewBox.baseVal;
+      const x = ((e.clientX - rect.left) / rect.width) * vb.width;
+      const y = ((e.clientY - rect.top) / rect.height) * vb.height;
+      const size = 6;
+      const mark = document.createElementNS('http://www.w3.org/2000/svg','g');
+      mark.innerHTML = `<line class="dmg-x" x1="${x-size}" y1="${y-size}" x2="${x+size}" y2="${y+size}"/><line class="dmg-x" x1="${x+size}" y1="${y-size}" x2="${x-size}" y2="${y+size}"/>`;
+      mark.style.cursor = 'pointer';
+      mark.title = 'Click again to remove';
+      mark.addEventListener('click', function(e2) { e2.stopPropagation(); this.remove(); });
+      this.appendChild(mark);
+    });
+  });
 });
 
-async function submitToDatabase(){
-  const st=document.getElementById('dbStatus');
-  const btn=document.querySelector('.submit-btn-db');
-  const driver=document.querySelector('input[placeholder="Full Name"]')?.value.trim()||'';
-  const asset_id=document.querySelector('input[placeholder*="WE-Truck"]')?.value.trim()||'';
-  const date=document.querySelector('input[type="date"]')?.value||new Date().toISOString().split('T')[0];
-  const mileage=document.querySelector('input[placeholder*="42"]')?.value||null;
-  const comments=document.querySelector('textarea')?.value.trim()||'';
+function getFormData() {
+  const driver = document.querySelector('input[placeholder="Full Name"]')?.value.trim()||'';
+  const asset_id = document.querySelector('input[placeholder*="WE-Truck"]')?.value.trim()||'';
+  const vehicle = document.querySelector('input[placeholder*="2022 Ford"]')?.value.trim()||'';
+  const vin = document.querySelector('input[placeholder="XXXXXX"]')?.value.trim()||'';
+  const date = document.querySelector('input[type="date"]')?.value||new Date().toISOString().split('T')[0];
+  const mileage = document.querySelector('input[placeholder*="42"]')?.value||'';
+  const comments = document.querySelector('textarea')?.value.trim()||'';
   
-  if(!driver||!asset_id){st.textContent='Enter Employee Name and Unit # first.';st.className='err';return;}
-  
-  const fails=[];const warns=[];
+  const fails=[], warns=[], oks=[];
   document.querySelectorAll('.check-item[data-id]').forEach(item=>{
     const label=item.querySelector('.check-label')?.childNodes[0]?.textContent?.trim()||'';
-    if(item.classList.contains('status-fail'))fails.push(label);
-    else if(item.classList.contains('status-warn'))warns.push(label);
+    if(item.classList.contains('status-fail')) fails.push(label);
+    else if(item.classList.contains('status-warn')) warns.push(label);
+    else if(item.classList.contains('status-ok')) oks.push(label);
   });
+
+  // Tire data
+  const tireCorners = document.querySelectorAll('.tire-corner');
+  const tires = [];
+  tireCorners.forEach(corner => {
+    const heading = corner.querySelector('h4')?.textContent||'';
+    const inputs = corner.querySelectorAll('input[type="number"]');
+    const tread = inputs[0]?.value||'';
+    const psi = inputs[1]?.value||'';
+    const activeFlag = corner.querySelector('.tire-flag.active')?.textContent||'';
+    tires.push({heading, tread, psi, status: activeFlag});
+  });
+
+  return {driver, asset_id, vehicle, vin, date, mileage, comments, fails, warns, oks, tires};
+}
+
+function reviewSubmit() {
+  const d = getFormData();
+  if(!d.driver || !d.asset_id) {
+    alert('Please enter Employee Name and Unit # before submitting.');
+    return;
+  }
   
-  let desc=`Monthly safety checklist by ${driver}.`;
-  if(fails.length)desc+=` IMMEDIATE ACTION: ${fails.join(', ')}.`;
-  if(warns.length)desc+=` NEEDS ATTENTION: ${warns.join(', ')}.`;
-  if(!fails.length&&!warns.length)desc+=' All items passed.';
-  if(comments)desc+=` Notes: ${comments}`;
+  const body = document.getElementById('confirmBody');
+  const tireRows = d.tires.map(t => `<div class="confirm-row"><span class="confirm-label">${t.heading}</span><span class="confirm-val">${t.tread ? 'Tread: '+t.tread+'/32" · PSI: '+t.psi : '—'} ${t.status ? '· '+t.status : ''}</span></div>`).join('');
   
-  btn.textContent='Submitting...';btn.disabled=true;
-  st.textContent='';st.className='';
+  body.innerHTML = `
+    <div class="confirm-section">Driver & Vehicle</div>
+    <div class="confirm-row"><span class="confirm-label">Employee</span><span class="confirm-val">${d.driver}</span></div>
+    <div class="confirm-row"><span class="confirm-label">Unit #</span><span class="confirm-val">${d.asset_id}</span></div>
+    <div class="confirm-row"><span class="confirm-label">Vehicle</span><span class="confirm-val">${d.vehicle||'—'}</span></div>
+    <div class="confirm-row"><span class="confirm-label">Date</span><span class="confirm-val">${d.date}</span></div>
+    <div class="confirm-row"><span class="confirm-label">Mileage</span><span class="confirm-val">${d.mileage||'—'}</span></div>
+    
+    <div class="confirm-section">Checklist Results</div>
+    <div class="confirm-row"><span class="confirm-label">✔ OK / Pass</span><span class="confirm-val">${d.oks.length} items</span></div>
+    ${d.warns.length ? `<div class="confirm-row"><span class="confirm-label">⚠ Needs Attention</span><span class="confirm-val confirm-warn">${d.warns.join(', ')}</span></div>` : ''}
+    ${d.fails.length ? `<div class="confirm-row"><span class="confirm-label">✖ Immediate Action</span><span class="confirm-val confirm-fail">${d.fails.join(', ')}</span></div>` : ''}
+    
+    ${d.tires.length ? `<div class="confirm-section">Tire Status</div>${tireRows}` : ''}
+    
+    ${d.comments ? `<div class="confirm-section">Comments</div><div style="font-size:12.5px;padding:6px 0;color:#333;">${d.comments}</div>` : ''}
+    
+    <div style="margin-top:12px;background:#FFF8E1;border:1px solid #F5C800;border-radius:6px;padding:10px 12px;font-size:11.5px;color:#555;">
+      ⚡ By confirming, this checklist will be saved to the White Electric fleet database and a copy will be emailed to your driver email on file.
+    </div>`;
   
-  try{
-    const r=await fetch(SB_URL+'/rest/v1/service_logs',{
+  document.getElementById('confirmOverlay').classList.add('open');
+}
+
+async function finalSubmit() {
+  document.getElementById('confirmOverlay').classList.remove('open');
+  const d = getFormData();
+  
+  let desc = `Monthly safety checklist by ${d.driver}.`;
+  if(d.fails.length) desc += ` IMMEDIATE ACTION REQUIRED: ${d.fails.join(', ')}.`;
+  if(d.warns.length) desc += ` NEEDS ATTENTION: ${d.warns.join(', ')}.`;
+  if(!d.fails.length && !d.warns.length) desc += ' All items passed.';
+  if(d.mileage) desc += ` Mileage: ${d.mileage}.`;
+  if(d.comments) desc += ` Notes: ${d.comments}`;
+
+  try {
+    // Save to database
+    const r = await fetch(SB_URL+'/rest/v1/service_logs', {
       method:'POST',
       headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
-      body:JSON.stringify({asset_id,type:'Inspection',date,mileage:mileage||null,description:desc,driver})
+      body:JSON.stringify({asset_id:d.asset_id, type:'Inspection', date:d.date, mileage:d.mileage||null, description:desc, driver:d.driver})
     });
-    if(mileage){
-      await fetch(SB_URL+'/rest/v1/assets?asset_id=eq.'+encodeURIComponent(asset_id),{
+    
+    if(d.mileage) {
+      await fetch(SB_URL+'/rest/v1/assets?asset_id=eq.'+encodeURIComponent(d.asset_id), {
         method:'PATCH',
         headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
-        body:JSON.stringify({mileage,last_mileage_date:date})
+        body:JSON.stringify({mileage:d.mileage, last_mileage_date:d.date})
       });
     }
-    if(r.ok||r.status===201){
-      st.textContent='✓ Submitted successfully!';st.className='ok';
-      btn.textContent='Submitted ✓';
-    } else {
-      throw new Error('Status '+r.status);
-    }
-  } catch(e){
-    st.textContent='Error: '+e.message;st.className='err';
-    btn.textContent='Submit Checklist';btn.disabled=false;
+
+    // Send email receipt to driver (if we have an email)
+    const driverEmailEl = document.querySelector('input[type="email"]');
+    const driverEmail = driverEmailEl?.value?.trim() || '';
+    
+    const emailHtml = `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif;background:#f4f4f4;padding:20px;">
+<div style="max-width:560px;margin:0 auto;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.1);">
+  <div style="background:#1A1A1A;padding:16px 24px;border-bottom:4px solid #F5C800;">
+    <div style="font-size:18px;font-weight:900;color:#F5C800;letter-spacing:2px;">WHITE ELECTRIC</div>
+    <div style="font-size:11px;color:#888;letter-spacing:1px;text-transform:uppercase;margin-top:2px;">Monthly Vehicle Safety Checklist — Submission Confirmation</div>
+  </div>
+  <div style="padding:20px 24px;">
+    <p style="font-size:14px;margin-bottom:16px;">Hi <strong>${d.driver}</strong>, your safety checklist has been submitted successfully.</p>
+    <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px;">
+      <tr style="background:#f9f9f9;"><td style="padding:7px 10px;color:#888;width:40%;">Unit #</td><td style="padding:7px 10px;font-weight:600;">${d.asset_id}</td></tr>
+      <tr><td style="padding:7px 10px;color:#888;">Vehicle</td><td style="padding:7px 10px;font-weight:600;">${d.vehicle||'—'}</td></tr>
+      <tr style="background:#f9f9f9;"><td style="padding:7px 10px;color:#888;">Date</td><td style="padding:7px 10px;font-weight:600;">${d.date}</td></tr>
+      <tr><td style="padding:7px 10px;color:#888;">Mileage</td><td style="padding:7px 10px;font-weight:600;">${d.mileage||'—'}</td></tr>
+      <tr style="background:#f9f9f9;"><td style="padding:7px 10px;color:#888;">Result</td><td style="padding:7px 10px;font-weight:600;color:${d.fails.length ? '#C62828' : d.warns.length ? '#F57F17' : '#2E7D32'}">${d.fails.length ? '⚠ IMMEDIATE ACTION REQUIRED' : d.warns.length ? '⚠ Needs Attention' : '✔ All Clear'}</td></tr>
+    </table>
+    ${d.fails.length ? `<div style="background:#FFEBEE;border-left:4px solid #C62828;padding:10px 14px;margin-bottom:12px;font-size:12px;"><strong style="color:#C62828;">Immediate Action Required:</strong><br>${d.fails.join('<br>')}</div>` : ''}
+    ${d.warns.length ? `<div style="background:#FFF8E1;border-left:4px solid #F57F17;padding:10px 14px;margin-bottom:12px;font-size:12px;"><strong style="color:#F57F17;">Needs Attention:</strong><br>${d.warns.join('<br>')}</div>` : ''}
+    ${d.comments ? `<div style="background:#f9f9f9;border-radius:6px;padding:10px 14px;font-size:12px;margin-bottom:12px;"><strong>Your Notes:</strong><br>${d.comments}</div>` : ''}
+    <p style="font-size:11px;color:#999;border-top:1px solid #eee;padding-top:12px;margin-top:12px;">This checklist has been saved to the White Electric fleet management system. Keep this email for your records.<br><br>White Electric Inc · Fleet Operations</p>
+  </div>
+</div>
+</body></html>`;
+
+    // Send to fleet manager always
+    const toList = [{email:'cynthiasmith34@icloud.com'}];
+    if(driverEmail) toList.push({email: driverEmail});
+
+    await fetch('https://api.brevo.com/v3/smtp/email', {
+      method:'POST',
+      headers:{'api-key':BREVO_KEY,'Content-Type':'application/json'},
+      body:JSON.stringify({
+        sender:{name:'White Electric Fleet',email:'cynthiasmith34@icloud.com'},
+        to: toList,
+        subject:`✔ Checklist Submitted — Unit ${d.asset_id} · ${d.driver} · ${d.date}`,
+        htmlContent: emailHtml
+      })
+    });
+
+    document.getElementById('successMsg').textContent = `Checklist saved for ${d.driver} — Unit ${d.asset_id}`;
+    document.getElementById('successOverlay').classList.add('open');
+
+  } catch(e) {
+    alert('Error submitting: ' + e.message + '\nPlease try again.');
   }
 }
 </script>
