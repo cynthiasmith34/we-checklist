@@ -458,9 +458,76 @@
 
   /* ── PRINT ── */
   @media print {
-    body { background: white; }
-    .page { margin: 0; box-shadow: none; border-radius: 0; max-width: 100%; }
-    .print-btn { display: none !important; }
+    @page { size: letter landscape; margin: 0.3in; }
+
+    body { background: white !important; }
+
+    /* Hide everything except the checklist form */
+    .print-btn, .submit-section, .confirm-overlay, .success-overlay { display: none !important; }
+
+    /* Remove placeholder text (gray hints) */
+    input::placeholder, textarea::placeholder { color: transparent !important; }
+    ::-webkit-input-placeholder { color: transparent !important; }
+
+    /* Remove the photo section entirely — can't upload in print */
+    .comments-section[style*="border-top"] { display: none !important; }
+
+    /* Scale everything to fit one landscape page */
+    .page {
+      margin: 0;
+      box-shadow: none;
+      border-radius: 0;
+      max-width: 100%;
+      border: 1.5px solid #1A1A1A;
+      font-size: 11px;
+      transform-origin: top left;
+    }
+
+    /* Tighter spacing */
+    .header { padding: 10px 16px 8px; }
+    .header-text h1 { font-size: 16px; }
+    .header-text p { font-size: 9px; }
+    .legend-bar .legend-item { padding: 4px 8px; font-size: 9px; }
+    .info-grid .info-cell { padding: 6px 10px; }
+    .info-cell label { font-size: 8px; }
+    .info-cell input { font-size: 10px; }
+    .summary-bar { padding: 4px 10px; font-size: 9px; }
+    .summary-bar span { font-size: 13px; }
+
+    /* Tighter checklist items */
+    .check-item { min-height: 26px; }
+    .check-label { font-size: 10px; padding: 4px 8px 4px 2px; }
+    .check-label .tip { display: none; } /* hide tips to save space */
+    .check-btn { width: 13px; height: 13px; }
+    .check-btns { gap: 3px; padding: 0 6px; }
+    .section-head { padding: 3px 10px; font-size: 10px; }
+
+    /* Tighter tires */
+    .tires-section { padding: 6px 10px; }
+    .tires-section > p { display: none; }
+    .tire-corner { padding: 5px 7px; }
+    .tire-corner h4 { font-size: 9px; margin-bottom: 3px; padding-bottom: 2px; }
+    .tire-field label { font-size: 9px; }
+    .tire-field input { font-size: 9px; width: 40px; }
+    .tire-flag { font-size: 9px; padding: 1px 2px; }
+    .tire-note { display: none; }
+
+    /* Damage section tighter */
+    .damage-section { padding: 6px 10px 8px; }
+    .damage-section h4 { font-size: 9px; margin-bottom: 5px; }
+    .damage-view svg { width: 60px; height: 98px; }
+    .damage-view p { display: none; }
+
+    /* Signatures tighter */
+    .sig-cell { padding: 8px 14px; }
+    .sig-cell label { font-size: 8px; }
+    .sig-line { font-size: 11px; }
+
+    /* Footer tighter */
+    .footer { padding: 4px; font-size: 9px; }
+
+    /* Prevent page breaks inside sections */
+    .section, .tires-section, .damage-section, .sig-row { page-break-inside: avoid; }
   }
 
   .print-btn {
