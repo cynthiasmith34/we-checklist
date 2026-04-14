@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>White Electric – Monthly Vehicle Safety Checklist</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --we-yellow: #F5C800;
+    --we-black: #1A1A1A;
+    --we-gray: #3A3A3A;
+    --we-light: #F8F7F2;
+    --ok: #2E7D32;
+    --warn: #F57F17;
+    --fail: #C62828;
+    --ok-bg: #E8F5E9;
+    --warn-bg: #FFF8E1;
+    --fail-bg: #FFEBEE;
+    --border: #D0CFC8;
+    --section-head: #1A1A1A;
+    --radius: 6px;
+    font-size: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: #ECEAE3;
+    color: var(--we-black);
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .page {
+    max-width: 900px;
+    margin: 24px auto;
+    background: var(--we-light);
+    border: 2px solid var(--we-black);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: var(--we-black);
+    color: var(--we-yellow);
+    padding: 18px 28px 14px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    border-bottom: 4px solid var(--we-yellow);
+  }
+  .logo-bolt {
+    flex-shrink: 0;
+  }
+  .logo-bolt svg { display: block; }
+  .header-text h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.1;
+  }
+  .header-text p {
+    font-size: 12px;
+    color: #C8B800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .header-badge {
+    margin-left: auto;
+    text-align: right;
+    font-family: 'Oswald', sans-serif;
+  }
+  .header-badge .badge-label {
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: #999;
+    text-transform: uppercase;
+  }
+  .header-badge .badge-month {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--we-yellow);
+  }
+
+  /* ── LEGEND ── */
+  .legend-bar {
+    display: flex;
+    gap: 0;
+    border-bottom: 2px solid var(--we-black);
+  }
+  .legend-item {
+    flex: 1;
+    padding: 7px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .legend-item:not(:last-child) { border-right: 1px solid rgba(0,0,0,0.15); }
+  .legend-item.ok   { background: var(--ok-bg);   color: var(--ok); }
+  .legend-item.warn { background: var(--warn-bg);  color: var(--warn); }
+  .legend-item.fail { background: var(--fail-bg);  color: var(--fail); }
+  .legend-dot {
+    width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
+  }
+  .legend-item.ok   .legend-dot { background: var(--ok); }
+  .legend-item.warn .legend-dot { background: var(--warn); }
+  .legend-item.fail .legend-dot { background: var(--fail); }
+
+  /* ── INFO GRID ── */
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-bottom: 2px solid var(--we-black);
+    background: #fff;
+  }
+  .info-cell {
+    padding: 10px 16px;
+    border-right: 1px solid var(--border);
+  }
+  .info-cell:last-child { border-right: none; }
+  .info-cell label {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888;
+    margin-bottom: 3px;
+  }
+  .info-cell input {
+    width: 100%;
+    border: none;
+    border-bottom: 1.5px solid var(--border);
+    background: transparent;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13px;
+    color: var(--we-black);
+    padding: 2px 0;
+    outline: none;
+  }
+  .info-cell input:focus { border-bottom-color: var(--we-yellow); }
+
+  /* ── BODY LAYOUT ── */
+  .body-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-bottom: 2px solid var(--we-black);
+  }
+  .body-col { border-right: 1px solid var(--border); }
+  .body-col:last-child { border-right: none; }
+
+  /* ── SECTION ── */
+  .section { margin-bottom: 0; }
+  .section-head {
+    background: var(--we-black);
+    color: var(--we-yellow);
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-head svg { opacity: 0.9; }
+
+  /* ── CHECKLIST ITEM ── */
+  .check-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    min-height: 38px;
+    background: #fff;
+    transition: background 0.15s;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-item:hover { background: #FFFDE7; }
+
+  .check-btns {
+    display: flex;
+    gap: 4px;
+    padding: 0 8px;
+    justify-content: center;
+  }
+  .check-btn {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s, border-color 0.15s, transform 0.1s;
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+  }
+  .check-btn:hover { transform: scale(1.15); }
+  .check-btn.btn-ok   { border-color: var(--ok); }
+  .check-btn.btn-warn { border-color: var(--warn); }
+  .check-btn.btn-fail { border-color: var(--fail); }
+  .check-btn.btn-ok.active   { background: var(--ok);   border-color: var(--ok); }
+  .check-btn.btn-warn.active { background: var(--warn); border-color: var(--warn); }
+  .check-btn.btn-fail.active { background: var(--fail); border-color: var(--fail); }
+
+  .check-label {
+    padding: 6px 10px 6px 4px;
+    font-size: 12.5px;
+    line-height: 1.35;
+    color: #222;
+  }
+  .check-label .tip {
+    display: block;
+    font-size: 10.5px;
+    color: #888;
+    margin-top: 1px;
+    font-style: italic;
+  }
+
+  /* ── TIRES SECTION ── */
+  .tires-section {
+    background: #fff;
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tire-grid {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .tire-corner {
+    background: #F4F3EE;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px 10px;
+    font-size: 11.5px;
+  }
+  .tire-corner h4 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--we-gray);
+    margin-bottom: 5px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 3px;
+  }
+  .tire-field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3px;
+    gap: 4px;
+  }
+  .tire-field label { color: #666; font-size: 11px; white-space: nowrap; }
+  .tire-field input {
+    border: none;
+    border-bottom: 1px solid #ccc;
+    background: transparent;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    width: 55px;
+    text-align: right;
+    outline: none;
+    padding: 1px 2px;
+  }
+  .tire-field input:focus { border-bottom-color: var(--we-yellow); }
+  .tire-status-row {
+    display: flex;
+    gap: 4px;
+    margin-top: 5px;
+  }
+  .tire-flag {
+    flex: 1;
+    text-align: center;
+    font-size: 10px;
+    padding: 2px 3px;
+    border-radius: 3px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.1s;
+    color: #555;
+  }
+  .tire-flag.ok-flag   { border-color: var(--ok);   }
+  .tire-flag.warn-flag { border-color: var(--warn);  }
+  .tire-flag.fail-flag { border-color: var(--fail);  }
+  .tire-flag.ok-flag.active   { background: var(--ok);   color: #fff; }
+  .tire-flag.warn-flag.active { background: var(--warn); color: #fff; }
+  .tire-flag.fail-flag.active { background: var(--fail); color: #fff; }
+
+  /* SVG tire illustration */
+  .tire-center { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .tire-center svg { opacity: 0.7; }
+  .tire-note {
+    font-size: 10px;
+    text-align: center;
+    color: #777;
+    font-style: italic;
+  }
+
+  /* ── DAMAGE DIAGRAM ── */
+  .damage-section {
+    padding: 10px 14px 12px;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+  }
+  .damage-section h4 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--we-gray);
+    margin-bottom: 8px;
+  }
+  .damage-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .damage-view {
+    background: #F4F3EE;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 6px;
+    text-align: center;
+  }
+  .damage-view label {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #888;
+    margin-bottom: 4px;
+  }
+  .damage-view svg { display: block; margin: 0 auto; cursor: crosshair; }
+  .damage-view p { font-size: 9.5px; color: #aaa; margin-top: 3px; font-style: italic; }
+
+  /* ── BOTTOM: Odometer / Fluid levels ── */
+  .fluid-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+  }
+  .fluid-cell {
+    padding: 8px 10px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .fluid-cell:last-child { border-right: none; }
+  .fluid-cell label { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: #888; margin-bottom: 5px; }
+  .fluid-cell .fluid-meter {
+    position: relative;
+    height: 10px;
+    background: #E8E6DC;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 5px;
+  }
+  .fluid-meter .fluid-fill {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 0.3s;
+  }
+  .fluid-cell input[type=range] {
+    width: 100%;
+    accent-color: var(--we-yellow);
+    cursor: pointer;
+    margin-top: 2px;
+  }
+  .fluid-val { font-family: 'Oswald', sans-serif; font-size: 13px; color: var(--we-black); }
+
+  /* ── COMMENTS ── */
+  .comments-section {
+    padding: 12px 16px;
+    background: #fff;
+  }
+  .comments-section h4 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--we-gray);
+    margin-bottom: 8px;
+  }
+  .comments-section textarea {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 12.5px;
+    resize: vertical;
+    min-height: 64px;
+    outline: none;
+  }
+  .comments-section textarea:focus { border-color: var(--we-yellow); }
+
+  /* ── SIGNATURES ── */
+  .sig-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 2px solid var(--we-black);
+    background: #F8F7F2;
+  }
+  .sig-cell {
+    padding: 12px 18px;
+    border-right: 1px solid var(--border);
+  }
+  .sig-cell:last-child { border-right: none; }
+  .sig-cell label {
+    display: block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #888;
+    margin-bottom: 4px;
+  }
+  .sig-line {
+    border: none;
+    border-bottom: 1.5px solid var(--we-black);
+    background: transparent;
+    width: 100%;
+    font-size: 13px;
+    padding: 3px 0;
+    outline: none;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--we-black);
+    color: #666;
+    font-size: 10px;
+    text-align: center;
+    padding: 7px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .footer span { color: var(--we-yellow); }
+
+  /* ── PRINT ── */
+  @media print {
+    body { background: white; }
+    .page { margin: 0; box-shadow: none; border-radius: 0; max-width: 100%; }
+    .print-btn { display: none !important; }
+  }
+
+  .print-btn {
+    display: block;
+    margin: 16px auto 24px;
+    padding: 10px 28px;
+    background: var(--we-black);
+    color: var(--we-yellow);
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .print-btn:hover { background: #333; }
+
+  /* status highlight row */
+  .check-item.status-ok   { background: var(--ok-bg); }
+  .check-item.status-warn { background: var(--warn-bg); }
+  .check-item.status-fail { background: var(--fail-bg); }
+
+  .summary-bar {
+    display: flex;
+    gap: 12px;
+    padding: 8px 16px;
+    background: #F0EFE8;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    align-items: center;
+  }
+  .sum-ok   { color: var(--ok); }
+  .sum-warn { color: var(--warn); }
+  .sum-fail { color: var(--fail); }
+  .summary-bar span { font-size: 18px; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<div class="page" id="checklist">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-bolt">
+      <!-- Lightning bolt logo icon -->
+      <svg width="44" height="52" viewBox="0 0 44 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon points="26,2 6,28 20,28 18,50 38,24 24,24" fill="#F5C800" stroke="#F5C800" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <h1>White Electric</h1>
+      <p>Monthly Vehicle Safety Checklist</p>
+    </div>
+    <div class="header-badge">
+      <div class="badge-label">Month / Year</div>
+      <input type="month" style="background:transparent;border:none;border-bottom:1.5px solid #555;color:#F5C800;font-family:'Oswald',sans-serif;font-size:16px;outline:none;text-align:right;width:150px;" />
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend-bar">
+    <div class="legend-item ok">   <div class="legend-dot"></div> ✔ OK / Pass </div>
+    <div class="legend-item warn"> <div class="legend-dot"></div> ⚠ Needs Attention </div>
+    <div class="legend-item fail"> <div class="legend-dot"></div> ✖ Requires Immediate Action </div>
+  </div>
+
+  <!-- VEHICLE INFO -->
+  <div class="info-grid">
+    <div class="info-cell"><label>Employee Name</label><input type="text" placeholder="Full Name" /></div>
+    <div class="info-cell"><label>Vehicle / Unit #</label><input type="text" placeholder="e.g. WE-Truck-04" /></div>
+    <div class="info-cell"><label>Date Completed</label><input type="date" /></div>
+    <div class="info-cell"><label>Year / Make / Model</label><input type="text" placeholder="e.g. 2022 Ford F-150" /></div>
+    <div class="info-cell"><label>VIN (last 6)</label><input type="text" placeholder="XXXXXX" maxlength="6" /></div>
+    <div class="info-cell"><label>Current Mileage</label><input type="number" placeholder="e.g. 42,350" /></div>
+  </div>
+
+  <!-- SUMMARY BAR (live count) -->
+  <div class="summary-bar" id="summaryBar">
+    Progress: <span class="sum-ok" id="cntOk">0</span> OK &nbsp;|&nbsp;
+    <span class="sum-warn" id="cntWarn">0</span> Attention &nbsp;|&nbsp;
+    <span class="sum-fail" id="cntFail">0</span> Immediate Action
+  </div>
+
+  <!-- MAIN TWO-COLUMN BODY -->
+  <div class="body-cols">
+
+    <!-- LEFT COLUMN -->
+    <div class="body-col">
+
+      <!-- LIGHTS & EXTERIOR -->
+      <div class="section">
+        <div class="section-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C800" stroke-width="2.2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          Lights &amp; Exterior
+        </div>
+        <div class="check-item" data-id="ci1">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" title="OK" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" title="Attention" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" title="Fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Headlights, Tail Lights, Turn Signals <span class="tip">Test all lenses — replace any that are dim, cracked, or out</span></div>
+        </div>
+        <div class="check-item" data-id="ci2">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Brake Lights &amp; Hazard Lights <span class="tip">Have a helper verify while you press the brake pedal</span></div>
+        </div>
+        <div class="check-item" data-id="ci3">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Mirrors (All) — No cracks, properly adjusted</div>
+        </div>
+        <div class="check-item" data-id="ci4">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Windshield — No chips, cracks, or obstructions <span class="tip">Chips smaller than a quarter can usually be repaired</span></div>
+        </div>
+        <div class="check-item" data-id="ci5">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Wiper Blades &amp; Washer Fluid</div>
+        </div>
+        <div class="check-item" data-id="ci6">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Horn — Audible and functioning</div>
+        </div>
+      </div><!-- /lights -->
+
+      <!-- INTERIOR & SAFETY EQUIPMENT -->
+      <div class="section">
+        <div class="section-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C800" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Interior &amp; Safety Equipment
+        </div>
+        <div class="check-item" data-id="ci7">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Seatbelts — All positions latch &amp; retract properly</div>
+        </div>
+        <div class="check-item" data-id="ci8">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Dashboard Warning Lights — None active at startup <span class="tip">If check-engine, oil, or battery lights are on — report immediately</span></div>
+        </div>
+        <div class="check-item" data-id="ci9">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Fire Extinguisher — Present, charged, within reach</div>
+        </div>
+        <div class="check-item" data-id="ci10">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">First Aid Kit — Stocked and accessible</div>
+        </div>
+        <div class="check-item" data-id="ci11">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Registration &amp; Insurance Card — In vehicle, current</div>
+        </div>
+        <div class="check-item" data-id="ci12">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Cargo Area — Tools secured, no loose hazards <span class="tip">Unsecured tools are a safety risk in a sudden stop</span></div>
+        </div>
+      </div><!-- /interior -->
+
+      <!-- UNDER THE HOOD -->
+      <div class="section">
+        <div class="section-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C800" stroke-width="2.2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+          Under the Hood
+        </div>
+        <div class="check-item" data-id="ci13">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Engine Oil Level &amp; Color <span class="tip">Pull dipstick — oil should be between MIN/MAX marks; brown/black = needs change</span></div>
+        </div>
+        <div class="check-item" data-id="ci14">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Coolant / Antifreeze Level <span class="tip">Check reservoir (not radiator cap) — should be between LOW and FULL</span></div>
+        </div>
+        <div class="check-item" data-id="ci15">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Battery Terminals — Clean, secure, no corrosion <span class="tip">White/blue crust on terminals = corrosion; flag for service</span></div>
+        </div>
+        <div class="check-item" data-id="ci16">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Drive Belts — No cracking, fraying, or visible wear</div>
+        </div>
+        <div class="check-item" data-id="ci17">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">No Visible Leaks under hood (oil, coolant, fluid)</div>
+        </div>
+      </div><!-- /hood -->
+
+    </div><!-- /left col -->
+
+    <!-- RIGHT COLUMN -->
+    <div class="body-col">
+
+      <!-- TIRES -->
+      <div class="section">
+        <div class="section-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C800" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+          Tires &amp; Wheels
+        </div>
+        <div class="tires-section">
+          <p style="font-size:11px;color:#777;margin-bottom:6px;font-style:italic;">Record tread depth (32nds) &amp; PSI for each corner. Minimum safe tread: <strong>2/32"</strong>. Recommended PSI on door jamb sticker.</p>
+          <div class="tire-grid">
+            <!-- Left Front -->
+            <div class="tire-corner">
+              <h4>Left Front</h4>
+              <div class="tire-field"><label>Tread (32nds)</label><input type="number" min="0" max="32" placeholder="—"/></div>
+              <div class="tire-field"><label>PSI</label><input type="number" placeholder="—"/></div>
+              <div class="tire-status-row">
+                <div class="tire-flag ok-flag" onclick="toggleTireFlag(this)">OK</div>
+                <div class="tire-flag warn-flag" onclick="toggleTireFlag(this)">Worn</div>
+                <div class="tire-flag fail-flag" onclick="toggleTireFlag(this)">Replace</div>
+              </div>
+            </div>
+            <!-- Center tire illustration -->
+            <div class="tire-center">
+              <svg width="64" height="64" viewBox="0 0 64 64">
+                <circle cx="32" cy="32" r="30" fill="#333" stroke="#555" stroke-width="1"/>
+                <circle cx="32" cy="32" r="20" fill="#444" stroke="#666" stroke-width="1"/>
+                <circle cx="32" cy="32" r="8" fill="#222" stroke="#888" stroke-width="1.5"/>
+                <!-- tread marks -->
+                <path d="M22 10 Q32 4 42 10" stroke="#666" stroke-width="2" fill="none"/>
+                <path d="M22 54 Q32 60 42 54" stroke="#666" stroke-width="2" fill="none"/>
+                <path d="M10 22 Q4 32 10 42" stroke="#666" stroke-width="2" fill="none"/>
+                <path d="M54 22 Q60 32 54 42" stroke="#666" stroke-width="2" fill="none"/>
+              </svg>
+              <div class="tire-note">Tap flag to mark condition</div>
+            </div>
+            <!-- Right Front -->
+            <div class="tire-corner">
+              <h4>Right Front</h4>
+              <div class="tire-field"><label>Tread (32nds)</label><input type="number" min="0" max="32" placeholder="—"/></div>
+              <div class="tire-field"><label>PSI</label><input type="number" placeholder="—"/></div>
+              
+              <div class="tire-status-row">
+                <div class="tire-flag ok-flag" onclick="toggleTireFlag(this)">OK</div>
+                <div class="tire-flag warn-flag" onclick="toggleTireFlag(this)">Worn</div>
+                <div class="tire-flag fail-flag" onclick="toggleTireFlag(this)">Replace</div>
+              </div>
+            </div>
+          </div>
+          <!-- Row 2: Left Rear + Right Rear -->
+          <div class="tire-grid" style="margin-top:8px;">
+            <div class="tire-corner">
+              <h4>Left Rear</h4>
+              <div class="tire-field"><label>Tread (32nds)</label><input type="number" min="0" max="32" placeholder="—"/></div>
+              <div class="tire-field"><label>PSI</label><input type="number" placeholder="—"/></div>
+              
+              <div class="tire-status-row">
+                <div class="tire-flag ok-flag" onclick="toggleTireFlag(this)">OK</div>
+                <div class="tire-flag warn-flag" onclick="toggleTireFlag(this)">Worn</div>
+                <div class="tire-flag fail-flag" onclick="toggleTireFlag(this)">Replace</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;">
+              <!-- spare tire note -->
+              <svg width="40" height="40" viewBox="0 0 40 40" opacity="0.4">
+                <circle cx="20" cy="20" r="18" fill="none" stroke="#333" stroke-width="2" stroke-dasharray="4 3"/>
+                <circle cx="20" cy="20" r="10" fill="none" stroke="#333" stroke-width="1.5"/>
+                <text x="20" y="24" text-anchor="middle" font-size="7" fill="#555" font-family="sans-serif">SPARE</text>
+              </svg>
+              <div class="tire-note">Spare present?
+                <label style="cursor:pointer;"><input type="checkbox" id="spareOk" style="accent-color:var(--ok);"/> Yes</label>
+              </div>
+            </div>
+            <div class="tire-corner">
+              <h4>Right Rear</h4>
+              <div class="tire-field"><label>Tread (32nds)</label><input type="number" min="0" max="32" placeholder="—"/></div>
+              <div class="tire-field"><label>PSI</label><input type="number" placeholder="—"/></div>
+              
+              <div class="tire-status-row">
+                <div class="tire-flag ok-flag" onclick="toggleTireFlag(this)">OK</div>
+                <div class="tire-flag warn-flag" onclick="toggleTireFlag(this)">Worn</div>
+                <div class="tire-flag fail-flag" onclick="toggleTireFlag(this)">Replace</div>
+              </div>
+            </div>
+          </div>
+          <!-- Alignment/Balance -->
+          <div style="display:flex;gap:12px;margin-top:8px;">
+            <label style="font-size:11.5px;display:flex;align-items:center;gap:5px;cursor:pointer;">
+              <input type="checkbox" style="accent-color:var(--warn);width:13px;height:13px;"/>
+              Alignment check recommended
+            </label>
+            <label style="font-size:11.5px;display:flex;align-items:center;gap:5px;cursor:pointer;">
+              <input type="checkbox" style="accent-color:var(--warn);width:13px;height:13px;"/>
+              Wheel balance needed
+            </label>
+          </div>
+        </div>
+      </div><!-- /tires -->
+
+      <!-- BRAKES & UNDER VEHICLE -->
+      <div class="section">
+        <div class="section-head">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#F5C800" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Brakes &amp; Under Vehicle
+        </div>
+        <div class="check-item" data-id="ci18">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Brake Pedal — Firm feel, no spongy or low travel <span class="tip">Pedal should not sink to floor; note any soft/pulsing feel</span></div>
+        </div>
+        <div class="check-item" data-id="ci19">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Brake Noise — No squealing, grinding, or pulling</div>
+        </div>
+        <div class="check-item" data-id="ci20">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Parking / Emergency Brake — Holds on incline</div>
+        </div>
+        <div class="check-item" data-id="ci21">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Shock Absorbers / Suspension — No bounce, clunk, or lean</div>
+        </div>
+        <div class="check-item" data-id="ci22">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Ground Clearance — No visible fluid puddles under vehicle <span class="tip">Puddle at rear = fuel or coolant; front-center = AC condensate (normal)</span></div>
+        </div>
+        <div class="check-item" data-id="ci23">
+          <div class="check-btns">
+            <button class="check-btn btn-ok" onclick="setStatus(this,'ok')"></button>
+            <button class="check-btn btn-warn" onclick="setStatus(this,'warn')"></button>
+            <button class="check-btn btn-fail" onclick="setStatus(this,'fail')"></button>
+          </div>
+          <div class="check-label">Exhaust — No unusual smoke color or loud rattling <span class="tip">Blue smoke = oil burning; white smoke = coolant; black = rich fuel mix</span></div>
+        </div>
+      </div><!-- /brakes -->
+
+      <!-- DAMAGE DIAGRAM -->
+      <div class="damage-section">
+        <h4>📋 Prior / New Body Damage — Mark any damage below</h4>
+        <div class="damage-grid">
+          <!-- Top View -->
+          <div class="damage-view">
+            <label>Top View</label>
+            <svg width="80" height="130" viewBox="0 0 80 130" id="dmgTop">
+              <!-- truck/van top view outline -->
+              <rect x="15" y="8" width="50" height="114" rx="10" fill="#E8E6DC" stroke="#555" stroke-width="1.5"/>
+              <rect x="18" y="12" width="44" height="40" rx="5" fill="#D0CFc8" stroke="#777" stroke-width="1"/>
+              <rect x="22" y="56" width="36" height="62" rx="3" fill="#D0CFc8" stroke="#777" stroke-width="1"/>
+              <!-- wheels -->
+              <rect x="6" y="20" width="9" height="18" rx="3" fill="#888"/>
+              <rect x="65" y="20" width="9" height="18" rx="3" fill="#888"/>
+              <rect x="6" y="94" width="9" height="18" rx="3" fill="#888"/>
+              <rect x="65" y="94" width="9" height="18" rx="3" fill="#888"/>
+              <!-- label -->
+              <text x="40" y="72" text-anchor="middle" font-size="8" fill="#888" font-family="sans-serif">CARGO</text>
+            </svg>
+            <p>Tap to mark</p>
+          </div>
+          <!-- Front View -->
+          <div class="damage-view">
+            <label>Front View</label>
+            <svg width="80" height="130" viewBox="0 0 80 130">
+              <rect x="5" y="30" width="70" height="70" rx="6" fill="#E8E6DC" stroke="#555" stroke-width="1.5"/>
+              <!-- windshield -->
+              <rect x="12" y="36" width="56" height="30" rx="3" fill="#C8D8E8" stroke="#777" stroke-width="1"/>
+              <!-- headlights -->
+              <rect x="6" y="70" width="18" height="12" rx="3" fill="#FFFBCC" stroke="#888" stroke-width="1"/>
+              <rect x="56" y="70" width="18" height="12" rx="3" fill="#FFFBCC" stroke="#888" stroke-width="1"/>
+              <!-- grille -->
+              <rect x="20" y="72" width="40" height="20" rx="2" fill="#BBB" stroke="#888" stroke-width="1"/>
+              <!-- bumper -->
+              <rect x="5" y="95" width="70" height="8" rx="2" fill="#AAA" stroke="#777" stroke-width="1"/>
+              <!-- tires -->
+              <ellipse cx="14" cy="118" rx="10" ry="10" fill="#555" stroke="#333" stroke-width="1.5"/>
+              <ellipse cx="66" cy="118" rx="10" ry="10" fill="#555" stroke="#333" stroke-width="1.5"/>
+            </svg>
+            <p>Tap to mark</p>
+          </div>
+          <!-- Rear View -->
+          <div class="damage-view">
+            <label>Rear View</label>
+            <svg width="80" height="130" viewBox="0 0 80 130">
+              <rect x="5" y="30" width="70" height="70" rx="6" fill="#E8E6DC" stroke="#555" stroke-width="1.5"/>
+              <!-- rear window -->
+              <rect x="18" y="36" width="44" height="22" rx="3" fill="#C8D8E8" stroke="#777" stroke-width="1"/>
+              <!-- tail lights -->
+              <rect x="6" y="62" width="16" height="14" rx="3" fill="#FFCCCC" stroke="#888" stroke-width="1"/>
+              <rect x="58" y="62" width="16" height="14" rx="3" fill="#FFCCCC" stroke="#888" stroke-width="1"/>
+              <!-- rear doors -->
+              <rect x="22" y="58" width="36" height="38" rx="2" fill="#D0CFC8" stroke="#888" stroke-width="1"/>
+              <line x1="40" y1="58" x2="40" y2="96" stroke="#999" stroke-width="1"/>
+              <!-- bumper -->
+              <rect x="5" y="95" width="70" height="8" rx="2" fill="#AAA" stroke="#777" stroke-width="1"/>
+              <!-- tires -->
+              <ellipse cx="14" cy="118" rx="10" ry="10" fill="#555" stroke="#333" stroke-width="1.5"/>
+              <ellipse cx="66" cy="118" rx="10" ry="10" fill="#555" stroke="#333" stroke-width="1.5"/>
+            </svg>
+            <p>Tap to mark</p>
+          </div>
+        </div>
+        <p style="font-size:10.5px;color:#aaa;margin-top:6px;text-align:center;font-style:italic;">Circle or describe any new damage in comments below</p>
+      </div><!-- /damage -->
+
+    </div><!-- /right col -->
+  </div><!-- /body-cols -->
+
+  <!-- PHOTO SECTION -->
+  <div class="comments-section" style="border-top: 2px solid var(--we-black);">
+    <h4>📷 Vehicle Photos — Required Monthly</h4>
+    <p style="font-size:11.5px;color:#777;margin-bottom:10px;font-style:italic;">Take one photo from each angle before beginning your route. Photos document vehicle condition at time of inspection.</p>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+
+      <div style="text-align:center;">
+        <label for="photoFront" style="display:block;cursor:pointer;">
+          <div style="border:2px dashed var(--border);border-radius:6px;padding:10px 6px;background:#F4F3EE;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--we-yellow)'" onmouseout="this.style.borderColor='var(--border)'">
+            <!-- Front car icon -->
+            <svg width="56" height="48" viewBox="0 0 80 60" style="display:block;margin:0 auto 6px;">
+              <rect x="5" y="18" width="70" height="34" rx="5" fill="#D0CFC8" stroke="#666" stroke-width="1.5"/>
+              <rect x="10" y="22" width="60" height="20" rx="3" fill="#C8D8E8" stroke="#888" stroke-width="1"/>
+              <rect x="6" y="40" width="16" height="8" rx="2" fill="#FFFBCC" stroke="#999" stroke-width="1"/>
+              <rect x="58" y="40" width="16" height="8" rx="2" fill="#FFFBCC" stroke="#999" stroke-width="1"/>
+              <rect x="22" y="42" width="36" height="8" rx="1" fill="#BBB" stroke="#999" stroke-width="1"/>
+              <rect x="5" y="48" width="70" height="6" rx="2" fill="#AAA" stroke="#888" stroke-width="1"/>
+              <ellipse cx="13" cy="57" rx="9" ry="5" fill="#555"/>
+              <ellipse cx="67" cy="57" rx="9" ry="5" fill="#555"/>
+            </svg>
+            <div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#555;margin-bottom:4px;">Front</div>
+            <div id="photoFrontThumb" style="display:none;margin-bottom:4px;"><img style="max-width:100%;max-height:60px;border-radius:4px;object-fit:cover;" /></div>
+            <div style="font-size:10px;color:#aaa;">Tap to attach photo</div>
+          </div>
+        </label>
+        <input type="file" id="photoFront" accept="image/*" capture="environment" style="display:none;" onchange="previewPhoto(this,'photoFrontThumb')"/>
+      </div>
+
+      <div style="text-align:center;">
+        <label for="photoLeft" style="display:block;cursor:pointer;">
+          <div style="border:2px dashed var(--border);border-radius:6px;padding:10px 6px;background:#F4F3EE;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--we-yellow)'" onmouseout="this.style.borderColor='var(--border)'">
+            <svg width="56" height="48" viewBox="0 0 80 60" style="display:block;margin:0 auto 6px;">
+              <rect x="5" y="14" width="70" height="36" rx="6" fill="#D0CFC8" stroke="#666" stroke-width="1.5"/>
+              <rect x="10" y="16" width="32" height="20" rx="3" fill="#C8D8E8" stroke="#888" stroke-width="1"/>
+              <rect x="44" y="16" width="26" height="20" rx="3" fill="#C8D8E8" stroke="#888" stroke-width="1"/>
+              <rect x="5" y="44" width="70" height="6" rx="2" fill="#AAA" stroke="#888" stroke-width="1"/>
+              <ellipse cx="16" cy="54" rx="10" ry="6" fill="#555"/>
+              <ellipse cx="62" cy="54" rx="10" ry="6" fill="#555"/>
+              <rect x="6" y="24" width="8" height="12" rx="2" fill="#FFFBCC" stroke="#999" stroke-width="1"/>
+              <rect x="66" y="28" width="8" height="8" rx="2" fill="#FFCCCC" stroke="#999" stroke-width="1"/>
+            </svg>
+            <div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#555;margin-bottom:4px;">Driver Side</div>
+            <div id="photoLeftThumb" style="display:none;margin-bottom:4px;"><img style="max-width:100%;max-height:60px;border-radius:4px;object-fit:cover;" /></div>
+            <div style="font-size:10px;color:#aaa;">Tap to attach photo</div>
+          </div>
+        </label>
+        <input type="file" id="photoLeft" accept="image/*" capture="environment" style="display:none;" onchange="previewPhoto(this,'photoLeftThumb')"/>
+      </div>
+
+      <div style="text-align:center;">
+        <label for="photoRight" style="display:block;cursor:pointer;">
+          <div style="border:2px dashed var(--border);border-radius:6px;padding:10px 6px;background:#F4F3EE;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--we-yellow)'" onmouseout="this.style.borderColor='var(--border)'">
+            <svg width="56" height="48" viewBox="0 0 80 60" style="display:block;margin:0 auto 6px;">
+              <rect x="5" y="14" width="70" height="36" rx="6" fill="#D0CFC8" stroke="#666" stroke-width="1.5"/>
+              <rect x="38" y="16" width="32" height="20" rx="3" fill="#C8D8E8" stroke="#888" stroke-width="1"/>
+              <rect x="10" y="16" width="26" height="20" rx="3" fill="#C8D8E8" stroke="#888" stroke-width="1"/>
+              <rect x="5" y="44" width="70" height="6" rx="2" fill="#AAA" stroke="#888" stroke-width="1"/>
+              <ellipse cx="16" cy="54" rx="10" ry="6" fill="#555"/>
+              <ellipse cx="62" cy="54" rx="10" ry="6" fill="#555"/>
+              <rect x="66" y="24" width="8" height="12" rx="2" fill="#FFFBCC" stroke="#999" stroke-width="1"/>
+              <rect x="6" y="28" width="8" height="8" rx="2" fill="#FFCCCC" stroke="#999" stroke-width="1"/>
+            </svg>
+            <div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#555;margin-bottom:4px;">Passenger Side</div>
+            <div id="photoRightThumb" style="display:none;margin-bottom:4px;"><img style="max-width:100%;max-height:60px;border-radius:4px;object-fit:cover;" /></div>
+            <div style="font-size:10px;color:#aaa;">Tap to attach photo</div>
+          </div>
+        </label>
+        <input type="file" id="photoRight" accept="image/*" capture="environment" style="display:none;" onchange="previewPhoto(this,'photoRightThumb')"/>
+      </div>
+
+      <div style="text-align:center;">
+        <label for="photoRear" style="display:block;cursor:pointer;">
+          <div style="border:2px dashed var(--border);border-radius:6px;padding:10px 6px;background:#F4F3EE;transition:border-color 0.15s;" onmouseover="this.style.borderColor='var(--we-yellow)'" onmouseout="this.style.borderColor='var(--border)'">
+            <svg width="56" height="48" viewBox="0 0 80 60" style="display:block;margin:0 auto 6px;">
+              <rect x="5" y="18" width="70" height="34" rx="5" fill="#D0CFC8" stroke="#666" stroke-width="1.5"/>
+              <rect x="14" y="22" width="52" height="16" rx="3" fill="#C8D8E8" stroke="#888" stroke-width="1"/>
+              <rect x="6" y="40" width="16" height="8" rx="2" fill="#FFCCCC" stroke="#999" stroke-width="1"/>
+              <rect x="58" y="40" width="16" height="8" rx="2" fill="#FFCCCC" stroke="#999" stroke-width="1"/>
+              <rect x="22" y="40" width="36" height="14" rx="1" fill="#C0BFB8" stroke="#999" stroke-width="1"/>
+              <line x1="40" y1="40" x2="40" y2="54" stroke="#999" stroke-width="1"/>
+              <rect x="5" y="48" width="70" height="6" rx="2" fill="#AAA" stroke="#888" stroke-width="1"/>
+              <ellipse cx="13" cy="57" rx="9" ry="5" fill="#555"/>
+              <ellipse cx="67" cy="57" rx="9" ry="5" fill="#555"/>
+            </svg>
+            <div style="font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:#555;margin-bottom:4px;">Rear</div>
+            <div id="photoRearThumb" style="display:none;margin-bottom:4px;"><img style="max-width:100%;max-height:60px;border-radius:4px;object-fit:cover;" /></div>
+            <div style="font-size:10px;color:#aaa;">Tap to attach photo</div>
+          </div>
+        </label>
+        <input type="file" id="photoRear" accept="image/*" capture="environment" style="display:none;" onchange="previewPhoto(this,'photoRearThumb')"/>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- COMMENTS -->
+  <div class="comments-section">
+    <h4>💬 Comments / Issues to Report</h4>
+    <textarea placeholder="Describe any concerns, maintenance needs, damage, or issues noted during this inspection…"></textarea>
+  </div>
+
+  <!-- SIGNATURES -->
+  <div class="sig-row">
+    <div class="sig-cell">
+      <label>Employee Signature</label>
+      <input type="text" class="sig-line" placeholder="Sign above" />
+      <div style="margin-top:6px;display:flex;gap:16px;">
+        <span style="font-size:10.5px;color:#888;">Date: <input type="date" style="border:none;border-bottom:1px solid #ccc;background:transparent;font-size:10.5px;outline:none;" /></span>
+      </div>
+    </div>
+    <div class="sig-cell">
+      <label>Supervisor / Manager Review</label>
+      <input type="text" class="sig-line" placeholder="Sign above" />
+      <div style="margin-top:6px;display:flex;gap:16px;">
+        <span style="font-size:10.5px;color:#888;">Date: <input type="date" style="border:none;border-bottom:1px solid #ccc;background:transparent;font-size:10.5px;outline:none;" /></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>White Electric</span> &nbsp;·&nbsp; Monthly Vehicle Safety Checklist &nbsp;·&nbsp; Completed checklists should be submitted to the office for filing.
+  </div>
+</div>
+
+<button class="print-btn" onclick="window.print()">🖨 Print / Save as PDF</button>
+
+<script>
+  function previewPhoto(input, thumbId) {
+    const file = input.files[0];
+    if (!file) return;
+    const wrap = document.getElementById(thumbId);
+    const img = wrap.querySelector('img');
+    img.src = URL.createObjectURL(file);
+    wrap.style.display = 'block';
+  }
+
+  function setStatus(btn, status) {
+    const row = btn.closest('.check-item');
+    const btns = row.querySelectorAll('.check-btn');
+    btns.forEach(b => b.classList.remove('active'));
+    row.classList.remove('status-ok','status-warn','status-fail');
+
+    if (!btn.classList.contains('active')) {
+      btn.classList.add('active');
+      row.classList.add('status-' + status);
+    }
+    updateSummary();
+  }
+
+  function toggleTireFlag(el) {
+    const group = el.closest('.tire-status-row');
+    group.querySelectorAll('.tire-flag').forEach(f => f.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function updateSummary() {
+    const ok   = document.querySelectorAll('.check-item.status-ok').length;
+    const warn = document.querySelectorAll('.check-item.status-warn').length;
+    const fail = document.querySelectorAll('.check-item.status-fail').length;
+    document.getElementById('cntOk').textContent   = ok;
+    document.getElementById('cntWarn').textContent = warn;
+    document.getElementById('cntFail').textContent = fail;
+  }
+</script>
+
+<style>
+.submit-section{background:#1A1A1A;padding:20px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.submit-btn-db{background:#F5C800;color:#1A1A1A;font-family:'Oswald',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border:none;border-radius:6px;padding:12px 32px;cursor:pointer;}
+.submit-btn-db:hover{background:#e6b800;}
+#dbStatus{font-size:12px;color:#888;font-family:'Oswald',sans-serif;}
+#dbStatus.ok{color:#2E7D32;}
+#dbStatus.err{color:#C62828;}
+</style>
+<div class="submit-section">
+  <div>
+    <div style="color:#F5C800;font-family:'Oswald',sans-serif;font-size:13px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:4px;">⚡ Submit to Fleet Database</div>
+    <div style="color:#666;font-size:11px;">Saves checklist results directly to the White Electric fleet system.</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div id="dbStatus"></div>
+    <button class="submit-btn-db" onclick="submitToDatabase()">Submit Checklist</button>
+  </div>
+</div>
+<script>
+const SB_URL='https://odeytpjnkfwksguflhxy.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9kZXl0cGpua2Z3a3NndWZsaHh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYwNzkzMzYsImV4cCI6MjA5MTY1NTMzNn0.U1OE3zqxKnkoU-0BRHTBFiy1yPrbhcgT0Ra9xryTCdQ';
+
+window.addEventListener('DOMContentLoaded',()=>{
+  const p=new URLSearchParams(window.location.search);
+  if(p.get('driver')){const el=document.querySelector('input[placeholder="Full Name"]');if(el)el.value=p.get('driver');}
+  if(p.get('asset')){const el=document.querySelector('input[placeholder*="WE-Truck"]');if(el)el.value=p.get('asset');}
+  if(p.get('vehicle')){const el=document.querySelector('input[placeholder*="2022 Ford"]');if(el)el.value=p.get('vehicle');}
+  document.querySelectorAll('input[type="date"]').forEach(i=>{if(!i.value)i.value=new Date().toISOString().split('T')[0];});
+});
+
+async function submitToDatabase(){
+  const st=document.getElementById('dbStatus');
+  const btn=document.querySelector('.submit-btn-db');
+  const driver=document.querySelector('input[placeholder="Full Name"]')?.value.trim()||'';
+  const asset_id=document.querySelector('input[placeholder*="WE-Truck"]')?.value.trim()||'';
+  const date=document.querySelector('input[type="date"]')?.value||new Date().toISOString().split('T')[0];
+  const mileage=document.querySelector('input[placeholder*="42"]')?.value||null;
+  const comments=document.querySelector('textarea')?.value.trim()||'';
+  
+  if(!driver||!asset_id){st.textContent='Enter Employee Name and Unit # first.';st.className='err';return;}
+  
+  const fails=[];const warns=[];
+  document.querySelectorAll('.check-item[data-id]').forEach(item=>{
+    const label=item.querySelector('.check-label')?.childNodes[0]?.textContent?.trim()||'';
+    if(item.classList.contains('status-fail'))fails.push(label);
+    else if(item.classList.contains('status-warn'))warns.push(label);
+  });
+  
+  let desc=`Monthly safety checklist by ${driver}.`;
+  if(fails.length)desc+=` IMMEDIATE ACTION: ${fails.join(', ')}.`;
+  if(warns.length)desc+=` NEEDS ATTENTION: ${warns.join(', ')}.`;
+  if(!fails.length&&!warns.length)desc+=' All items passed.';
+  if(comments)desc+=` Notes: ${comments}`;
+  
+  btn.textContent='Submitting...';btn.disabled=true;
+  st.textContent='';st.className='';
+  
+  try{
+    const r=await fetch(SB_URL+'/rest/v1/service_logs',{
+      method:'POST',
+      headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
+      body:JSON.stringify({asset_id,type:'Inspection',date,mileage:mileage||null,description:desc,driver})
+    });
+    if(mileage){
+      await fetch(SB_URL+'/rest/v1/assets?asset_id=eq.'+encodeURIComponent(asset_id),{
+        method:'PATCH',
+        headers:{'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},
+        body:JSON.stringify({mileage,last_mileage_date:date})
+      });
+    }
+    if(r.ok||r.status===201){
+      st.textContent='✓ Submitted successfully!';st.className='ok';
+      btn.textContent='Submitted ✓';
+    } else {
+      throw new Error('Status '+r.status);
+    }
+  } catch(e){
+    st.textContent='Error: '+e.message;st.className='err';
+    btn.textContent='Submit Checklist';btn.disabled=false;
+  }
+}
+</script>
+</body>
+</html>
